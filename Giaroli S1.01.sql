@@ -36,13 +36,9 @@ LIMIT 1;
 #N2.Exercici 1: verificar si en la base de dades existeixen companyies amb identificadors (id) duplicats.
 SELECT id, company_name
 FROM company
-WHERE company_name IN (
-	SELECT company_name
-    FROM company
-    GROUP BY company_name
-    HAVING count(*)>1
-    );
-    
+GROUP BY id, company_name
+HAVING count(*) > 1;
+
 #N2.Exercici 2: En quin dia es van realitzar les cinc vendes més costoses? Mostra la data de la transacció i la sumatòria de la quantitat de diners.
 SELECT left(timestamp,10) as date, sum(amount) AS total_diario
 FROM transaction
@@ -86,7 +82,4 @@ INNER JOIN transaction
 ON company.id=transaction.company_id
 WHERE declined = 0
 HAVING date IN ("2022-03-16","2022-02-28","2022-02-13");
-
-
-
 
